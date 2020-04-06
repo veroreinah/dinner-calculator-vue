@@ -1,18 +1,57 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <h1>Dinner calculator</h1>
+    <div>
+      <table>
+        <tbody>
+          <tr>
+            <td>Dinner</td>
+            <td>100 €</td>
+            <td>
+              <button>+</button>
+              <button>-</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Tip</td>
+            <td>9 €</td>
+            <td>
+              <button>+</button>
+              <button>-</button>
+            </td>
+          </tr>
+          <tr>
+            <td>People</td>
+            <td>2</td>
+            <td>
+              <button>+</button>
+              <button>-</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Total with taxes (21%)</td>
+            <td>121.00 €</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Total with tip</td>
+            <td>130.00 €</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Total per person</td>
+            <td>65.00 €</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
-
 export default {
   name: "App",
-  components: {
-    HelloWorld
-  }
 };
 </script>
 
@@ -24,5 +63,55 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+/* General */
+
+body {
+  color: #999;
+  font-family: "Arial";
+}
+
+h1 {
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* Table */
+
+table {
+  margin: 25px auto;
+  border-collapse: collapse;
+  border: 1px solid #eee;
+  border-bottom: 2px solid #42b883;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1), 0px 10px 20px rgba(0, 0, 0, 0.05),
+    0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
+}
+
+table tr:hover {
+  background: #f4f4f4;
+}
+
+table tr:hover td {
+  color: #555;
+}
+
+table td {
+  color: #999;
+  border: 1px solid #eee;
+  padding: 12px 35px;
+  border-collapse: collapse;
+}
+
+table tr td:nth-child(2) {
+  text-align: right;
+}
+
+/* Buttons */
+
+button {
+  padding: 4px 7px;
+  border-radius: 1px;
+  outline: none;
 }
 </style>
