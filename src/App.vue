@@ -6,41 +6,41 @@
         <tbody>
           <tr>
             <td>Dinner</td>
-            <td>100 €</td>
+            <td>{{ dinner | currency("€", 0) }}</td>
             <td>
-              <button>+</button>
-              <button>-</button>
+              <button @click="updateDinner('dinner', 5)">+</button>
+              <button @click="updateDinner('dinner', -5)">-</button>
             </td>
           </tr>
           <tr>
             <td>Tip</td>
-            <td>9 €</td>
+            <td>{{ tip | currency("€", 0) }}</td>
             <td>
-              <button>+</button>
-              <button>-</button>
+              <button @click="updateDinner('tip', 1)">+</button>
+              <button @click="updateDinner('tip', -1)">-</button>
             </td>
           </tr>
           <tr>
             <td>People</td>
-            <td>2</td>
+            <td>{{ people }}</td>
             <td>
-              <button>+</button>
-              <button>-</button>
+              <button @click="updateDinner('people', 1)">+</button>
+              <button @click="updateDinner('people', -1, 1)">-</button>
             </td>
           </tr>
           <tr>
-            <td>Total with taxes (21%)</td>
-            <td>121.00 €</td>
+            <td>Total with taxes ({{ TAXES | percent }})</td>
+            <td>{{ totalWithTaxes | currency("€") }}</td>
             <td></td>
           </tr>
           <tr>
             <td>Total with tip</td>
-            <td>130.00 €</td>
+            <td>{{ totalWithTip | currency("€") }}</td>
             <td></td>
           </tr>
           <tr>
             <td>Total per person</td>
-            <td>65.00 €</td>
+            <td>{{ totalPerPerson | currency("€") }}</td>
             <td></td>
           </tr>
         </tbody>
@@ -52,6 +52,42 @@
 <script>
 export default {
   name: "App",
+  data() {
+    return {
+      dinner: 0,
+      tip: 0,
+      people: 1,
+      TAXES: 0.21,
+    };
+  },
+  computed: {
+    totalWithTaxes() {
+      return this.dinner + this.dinner * this.TAXES;
+    },
+    totalWithTip() {
+      return this.totalWithTaxes + this.tip;
+    },
+    totalPerPerson() {
+      return this.totalWithTip / this.people;
+    },
+  },
+  methods: {
+    updateDinner(variableToChange, increment, min = 0) {
+      this[variableToChange] = this[variableToChange] + increment;
+
+      if (this[variableToChange] < min) {
+        this[variableToChange] = min;
+      }
+    },
+  },
+  filters: {
+    currency(value, currencySymbol, decimalDigits = 2) {
+      return `${value.toFixed(decimalDigits)} ${currencySymbol}`;
+    },
+    percent(value) {
+      return `${value * 100}%`;
+    },
+  },
 };
 </script>
 
@@ -67,11 +103,6 @@ export default {
 
 /* General */
 
-body {
-  color: #999;
-  font-family: "Arial";
-}
-
 h1 {
   text-align: center;
   margin-top: 40px;
@@ -86,25 +117,25 @@ table {
   border-bottom: 2px solid #42b883;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1), 0px 10px 20px rgba(0, 0, 0, 0.05),
     0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
-}
 
-table tr:hover {
-  background: #f4f4f4;
-}
+  tr:hover {
+    background: #f4f4f4;
+  }
 
-table tr:hover td {
-  color: #555;
-}
+  tr:hover td {
+    color: #555;
+  }
 
-table td {
-  color: #999;
-  border: 1px solid #eee;
-  padding: 12px 35px;
-  border-collapse: collapse;
-}
+  td {
+    color: #999;
+    border: 1px solid #eee;
+    padding: 12px 35px;
+    border-collapse: collapse;
+  }
 
-table tr td:nth-child(2) {
-  text-align: right;
+  tr td:nth-child(2) {
+    text-align: right;
+  }
 }
 
 /* Buttons */
